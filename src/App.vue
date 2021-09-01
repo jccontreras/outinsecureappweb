@@ -1,14 +1,13 @@
 <template>
-  <div id="app" class="container-fluid">
-    <div id="nav">
-      <navbar-component/>
-    </div>
+  <div id="nav" >
+    <navbar-component/>
     <router-view/>
   </div>
 </template>
 
 <script>
 import NavbarComponent from "./components/navbar/NavbarComponent.vue";
+
 export default {
   components: {
     NavbarComponent,
@@ -18,6 +17,6 @@ export default {
 
 <style>
 #nav a.router-link-exact-active {
-  color: #23aa17;
+  color: #879f2d;
 }
 </style>

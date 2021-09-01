@@ -1,6 +1,6 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #cddb93">
+    <img src="@/assets/oislogo.png" style="max-height: 4%; max-width: 4%">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -21,16 +21,16 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <router-link class="dropdown-item" :to="{name: 'dashboard'}">Dashboard</router-link>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" @click="logout">Cerrar Sesión</a>
+              <a class="dropdown-item" @click="logout" style="cursor: pointer">Cerrar Sesión</a>
             </div>
           </div>
         </template>
         <template v-else>
           <router-link :to="{name: 'register'}">
-            <button class="btn btn-outline-dark mx-sm-2" type="button">Sing Up</button>
+            <button class="btn btn-outline-dark mx-sm-2" type="button">Registrarme</button>
           </router-link>
           <router-link :to="{name: 'login'}">
-            <button class="btn btn-outline-success my-2 mx-sm-3 my-sm-0" type="button">Log In</button>
+            <button class="btn btn-outline-success my-2 mx-sm-3 my-sm-0" type="button">Ingresar</button>
           </router-link>
         </template>
       </div>

@@ -1,41 +1,42 @@
 <template>
-  <div class="card my-5" style="width: 50%; align-content: center">
+  <div class="card my-3 shadow-lg p-3 mb-5 bg-white rounded" style="width: 50%; align-content: center">
     <div class="card-body">
-      <h5 class="card-title">Bienvenido</h5>
-      <h6 class="card-subtitle mb-2 text-muted">Por favor llena los datos para registrarte</h6>
+      <h5 class="card-title">Registro de Usuario</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Recuerde que <i class="req">*</i>  son campos obligatorios</h6>
       <div class="card-body">
         <form @submit.prevent="checkPass">
           <div class="form-group">
-            <label for="username">Nombre</label>
+            <label for="username">Nombre</label> <i class="req">*</i>
             <input type="text" class="form-control" id="username"
                    autocomplete="off" v-model="newuser.name" required>
           </div>
           <div class="form-group">
-            <label for="email">E-mail</label>
+            <label for="email">E-mail</label> <i class="req">*</i>
             <input type="email" class="form-control" id="email"
                    placeholder="name@correo.com" autocomplete="off" v-model="newuser.email" required>
           </div>
           <div class="form-group">
-            <label for="pass">Contraseña</label>
+            <label for="pass">Contraseña</label> <i class="req">*</i>
             <input type="password" class="form-control" id="pass"
                    autocomplete="off" minlength="6" v-model="newuser.pass" required>
           </div>
           <div class="form-group">
-            <label for="confpass">Confirmar Contraseña</label>
+            <label for="confpass">Confirmar Contraseña</label> <i class="req">*</i>
             <input type="password" class="form-control" id="confpass"
                    autocomplete="off" minlength="6" v-model="newuser.confpass" required>
           </div>
+          <hr>
           <button class="btn btn-outline-success" type="submit">Registrarme</button>
         </form>
       </div>
     </div>
-    <div class="alert alert-danger" role="alert" v-if="error">
+    <div class="alert alert-danger shadow-lg p-3 mb-5 rounded" role="alert" v-if="error">
       <h4 class="alert-heading">{{this.erroralert.title}}</h4>
       <label>{{this.erroralert.message}}</label>
       <hr>
       <label class="mb-0">{{this.erroralert.submessage}}</label>
     </div>
-    <div class="alert alert-success" role="alert" v-if="success">
+    <div class="alert alert-success shadow-lg p-3 mb-5 rounded" role="alert" v-if="success">
       <h4 class="alert-heading">Listo!</h4>
       <label>Estás registrado correctamente</label>
       <hr>
@@ -70,7 +71,7 @@ export default {
     success(val) {
       setTimeout(() => {
         if (val) this.success = false;
-      }, 3000);
+      }, 6000);
     },
     error(val) {
       setTimeout(() => {
@@ -90,6 +91,7 @@ export default {
       }
     },
     signup() {
+      firebase.auth().languageCode = "es";
       firebase
           .auth()
           .createUserWithEmailAndPassword(this.newuser.email, this.newuser.pass)
@@ -105,7 +107,7 @@ export default {
               this.newuser.email = "";
               this.newuser.pass = "";
               this.newuser.confpass = "";
-              this.$router.push({name: 'dashboard'})
+              firebase.auth().signOut();
             }).catch((error) => {
               console.log(error);
             });
@@ -129,3 +131,12 @@ export default {
   }
 }
 </script>
+
+<style>
+.req {
+  color: red;
+}
+label {
+
+}
+</style>
