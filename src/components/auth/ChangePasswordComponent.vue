@@ -1,14 +1,27 @@
 <template>
   <div class="card my-5 shadow-lg p-3 mb-5 bg-white rounded" style="width: 60%; align-content: center">
     <div class="card-body">
-      <h5 class="card-title">Cambio de Contraseña</h5>
+      <h5 class="card-title">
+        <router-link class="back" :to="{name: 'login'}" title="Volver al login">
+          <font-awesome-icon icon="arrow-circle-left"/>
+        </router-link>
+        Cambio de Contraseña
+      </h5>
       <div class="card-body">
         <form @submit.prevent="sendChangePsw">
           <div class="form-group">
             <label for="email">Por favor escriba el correo electrónico con el que se registro</label>
-            <input type="email" class="form-control" id="email"
-                   placeholder="name@correo.com" autocomplete="off" v-model="email" required>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <font-awesome-icon icon="envelope"/>
+                    </span>
+              </div>
+              <input type="email" class="form-control" id="email"
+                     placeholder="name@correo.com" autocomplete="off" v-model="email" required>
+            </div>
           </div>
+          <hr>
           <button class="btn btn-outline-dark" type="submit">Enviar Correo</button>
         </form>
       </div>
@@ -60,5 +73,7 @@ export default {
 </script>
 
 <style scoped>
-
+.back {
+  color: #879f2d;
+}
 </style>

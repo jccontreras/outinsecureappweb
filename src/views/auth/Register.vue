@@ -1,5 +1,5 @@
 <template>
-  <div class="offset-4">
+  <div class="offset-3">
     <register-component/>
   </div>
 </template>

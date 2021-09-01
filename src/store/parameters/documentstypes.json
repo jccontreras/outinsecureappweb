@@ -1,0 +1,18 @@
+[
+  {
+    "id": "CC",
+    "name": "Cédula de Ciudadanía"
+  },
+  {
+    "id": "NIT",
+    "name": "NIT"
+  },
+  {
+    "id": "PAS",
+    "name": "Pasaporte"
+  },
+  {
+    "id": "CE",
+    "name": "Cédula de Extranjería"
+  }
+]

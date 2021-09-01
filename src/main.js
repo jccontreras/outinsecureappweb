@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import "@/plugins/firebase";
 import firebase from "firebase/compat";
+require('./plugins/fontawesome');
 
 Vue.config.productionTip = false
 
