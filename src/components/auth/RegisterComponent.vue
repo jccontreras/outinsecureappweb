@@ -97,6 +97,7 @@ export default {
           .createUserWithEmailAndPassword(this.newuser.email, this.newuser.pass)
           .then((user) => {
             console.log("Success! ", user);
+            //firebase.firestore().collection('users').doc(user.user.uid).set(this.newuser);
             // update user
             user.user
             .updateProfile({
@@ -119,6 +120,7 @@ export default {
                   // Email verification sent!
                   // ...
                 });
+
           })
           .catch(error => {
             console.log("Failed!", error);

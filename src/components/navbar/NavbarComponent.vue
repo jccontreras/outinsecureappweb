@@ -21,7 +21,7 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <router-link class="dropdown-item" :to="{name: 'dashboard'}">Dashboard</router-link>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" @click="logout" style="cursor: pointer">Cerrar Sesión</a>
+              <a class="dropdown-item text-muted" @click="logout" style="cursor: pointer; font-style: italic;">Cerrar Sesión</a>
             </div>
           </div>
         </template>

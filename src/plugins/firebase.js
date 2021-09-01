@@ -2,6 +2,7 @@ import firebase from "firebase/compat";
 
 // Import needed firebase modules
 import "firebase/auth";
+import "firebase/firestore"
 
 // Firebase app config
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
