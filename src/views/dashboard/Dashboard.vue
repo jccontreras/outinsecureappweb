@@ -1,12 +1,15 @@
 <template>
-  <div>
-    This is a dashboard
-  </div>
+  <dashboard-component/>
 </template>
 
 <script>
+import DashboardComponent from "../../components/dashboard/DashboardComponent.vue";
+
 export default {
   name: "Dashboard",
+  components: {
+    DashboardComponent,
+  }
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="jumbotron shadow-lg p-3 mb-5 rounded" style="max-width: 80%; background-color: #cddb93">
+  <div class="jumbotron shadow-lg p-3 mb-5 my-5 rounded" style="background-color: #cddb93">
     <h1 class="display-4">Bienvenido a OIS Services!</h1>
     <p class="lead text-muted">Aquí podrás registrate y solicitar todos nuestros servicios de una forma rápida y sencilla</p>
     <hr class="my-4">

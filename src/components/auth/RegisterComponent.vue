@@ -118,7 +118,7 @@
                     </span>
                     </div>
                     <input type="password" class="form-control" id="pass"
-                           autocomplete="off" minlength="6" v-model="newuser.pass" required>
+                           autocomplete="off" minlength="6" v-model="pass" required>
                   </div>
                 </div>
               </div>
@@ -132,7 +132,7 @@
                     </span>
                     </div>
                     <input type="password" class="form-control" id="confpass"
-                           autocomplete="off" minlength="6" v-model="newuser.confpass" required>
+                           autocomplete="off" minlength="6" v-model="confpass" required>
                   </div>
                 </div>
               </div>
@@ -144,17 +144,15 @@
       </div>
     </div>
     <div class="col align-self-end" v-if="error">
-      <div class="alert alert-danger shadow-lg p-3 mb-5 rounded" role="alert">
+      <div class="alert alert-danger shadow-lg p-3 mb-5 rounded my-float" role="alert">
         <h4 class="alert-heading">{{ this.erroralert.title }}</h4>
         <label>{{ this.erroralert.message }}</label>
-        <hr>
-        <label class="mb-0">{{ this.erroralert.submessage }}</label>
       </div>
     </div>
     <div class="col align-self-end" v-if="success">
       <div class="alert alert-success shadow-lg p-3 mb-5 rounded my-float" role="alert">
         <h4 class="alert-heading">Listo!</h4>
-        <label>Estás registrado correctamente</label>
+        <label>Estás registrado correctamente.</label>
         <hr>
         <label class="mb-0">Hemos enviado un correo electrónico para tu verificación.</label>
       </div>
@@ -165,7 +163,6 @@
 <script>
 import firebase from "firebase/compat";
 import doclist from "@/store/parameters/documentstypes.json";
-//const db = firebase.firestore();
 
 export default {
   name: "RegisterComponent",
@@ -174,15 +171,14 @@ export default {
       erroralert: {
         title: "",
         message: "",
-        submessage: ""
       },
       success: false,
       error: false,
+      pass: "",
+      confpass: "",
       newuser: {
         name: "",
         email: "",
-        pass: "",
-        confpass: "",
         tdoc: "",
         doc: "",
         cel: "",
@@ -199,6 +195,7 @@ export default {
     success(val) {
       setTimeout(() => {
         if (val) this.success = false;
+        this.$router.push({name: 'dashboard'});
       }, 4000);
     },
     error(val) {
@@ -225,12 +222,11 @@ export default {
   },
   methods: {
     checkPass() {
-      if (this.newuser.pass === this.newuser.confpass) {
+      if (this.pass === this.confpass) {
         this.signup();
       } else {
         this.erroralert.title = "Contraseña no verificada";
         this.erroralert.message = "Por favor verifique que las contraseñas coincidan";
-        this.erroralert.submessage = "";
         this.error = true;
       }
     },
@@ -238,10 +234,9 @@ export default {
       firebase.auth().languageCode = "es";
       firebase
           .auth()
-          .createUserWithEmailAndPassword(this.newuser.email, this.newuser.pass)
+          .createUserWithEmailAndPassword(this.newuser.email, this.pass)
           .then((user) => {
-            console.log("Success! ", user);
-            firebase.firestore().collection('users').doc(this.newuser.doc).set(this.newuser);
+            firebase.firestore().collection('users').doc(user.user.uid).set(this.newuser);
             // update user
             user.user
                 .updateProfile({
@@ -249,33 +244,33 @@ export default {
                 }).then(() => {
               this.success = true;
               this.cleanForm();
-              firebase.auth().signOut();
             }).catch((error) => {
               console.log(error);
             });
 
             //send verification email
             user.user
-                .sendEmailVerification()
-                .then(() => {
-                  // Email verification sent!
-                  // ...
-                });
-
+                .sendEmailVerification();
           })
           .catch(error => {
             console.log("Failed!", error);
-            this.erroralert.title = "Ups!";
-            this.erroralert.message = "Hubo un problema al hacer el registro";
-            this.erroralert.submessage = "Por favor intentalo de nuevo más tarde.";
+            if (error.code === "auth/email-already-in-use") {
+              this.erroralert.title = "Ups!";
+              this.erroralert.message = "Este correo ya se encuentra registrado.";
+            } else {
+              this.erroralert.title = "Ups!";
+              this.erroralert.message = "Hubo un problema al hacer el registro, por favor intentalo de nuevo más tarde.";
+            }
             this.error = true;
           });
+
+
     },
     cleanForm() {
       this.newuser.name = "";
       this.newuser.email = "";
-      this.newuser.pass = "";
-      this.newuser.confpass = "";
+      this.pass = "";
+      this.confpass = "";
       this.newuser.doc = "";
       this.newuser.tdoc = "";
       this.newuser.cel = "";

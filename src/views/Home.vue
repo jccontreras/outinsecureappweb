@@ -1,5 +1,5 @@
 <template>
-  <div class="offset-2 my-4">
+  <div class="row justify-content-lg-center">
     <home-component/>
   </div>
 </template>

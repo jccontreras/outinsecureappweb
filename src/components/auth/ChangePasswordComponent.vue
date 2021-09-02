@@ -63,6 +63,11 @@ export default {
         this.$router.push({name: 'login'})
       }, 4000);
     },
+    error(val) {
+      setTimeout(() => {
+        if (val) this.error = false;
+      }, 4000);
+    }
   },
   methods: {
     sendChangePsw() {
@@ -71,7 +76,11 @@ export default {
             this.sent = true;
           })
           .catch((error) => {
-            this.errormsg = error.message;
+            console.log(error.code)
+            if (error.code === "auth/user-not-found") {
+              this.errormsg = "El usuario no existe, por favor verifique que sea el correo electrónico con el que se registro.";
+            }
+            this.error = true;
           });
     }
   }
