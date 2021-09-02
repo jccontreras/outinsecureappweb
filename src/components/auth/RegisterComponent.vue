@@ -208,7 +208,8 @@ export default {
         doc: "",
         cel: "",
         address: "",
-        rol: 3
+        rol: 3,
+        uid: "",
       },
     };
   },
@@ -272,6 +273,7 @@ export default {
           .auth()
           .createUserWithEmailAndPassword(this.newuser.email, this.pass)
           .then((user) => {
+            this.newuser.uid = user.user.uid;
             firebase.firestore().collection('users').doc(user.user.uid).set(this.newuser);
             // update user
             user.user
