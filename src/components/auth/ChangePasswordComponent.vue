@@ -1,35 +1,41 @@
 <template>
-  <div class="card my-5 shadow-lg p-3 mb-5 bg-white rounded" style="width: 60%; align-content: center">
-    <div class="card-body">
-      <h5 class="card-title">
-        <router-link class="back" :to="{name: 'login'}" title="Volver al login">
-          <font-awesome-icon icon="arrow-circle-left"/>
-        </router-link>
-        Cambio de Contraseña
-      </h5>
+  <div>
+    <div class="card my-5 shadow-lg p-3 mb-5 bg-white rounded" style="align-content: center">
       <div class="card-body">
-        <form @submit.prevent="sendChangePsw">
-          <div class="form-group">
-            <label for="email">Por favor escriba el correo electrónico con el que se registro</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
+        <h5 class="card-title">
+          <router-link class="back" :to="{name: 'login'}" title="Volver al login">
+            <font-awesome-icon icon="arrow-circle-left"/>
+          </router-link>
+          Cambio de Contraseña
+        </h5>
+        <div class="card-body">
+          <form @submit.prevent="sendChangePsw">
+            <div class="form-group">
+              <label for="email">Por favor escriba el correo electrónico con el que se registro</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
                     <span class="input-group-text">
                       <font-awesome-icon icon="envelope"/>
                     </span>
+                </div>
+                <input type="email" class="form-control" id="email"
+                       placeholder="name@correo.com" autocomplete="off" v-model="email" required>
               </div>
-              <input type="email" class="form-control" id="email"
-                     placeholder="name@correo.com" autocomplete="off" v-model="email" required>
             </div>
-          </div>
-          <hr>
-          <button class="btn btn-outline-dark" type="submit">Enviar Correo</button>
-        </form>
+            <hr>
+            <button class="btn btn-outline-dark" type="submit">Enviar Correo</button>
+          </form>
+        </div>
       </div>
-      <div class="alert alert-secondary shadow-lg p-3 mb-5 rounded my-2" role="alert" v-if="sent">
+    </div>
+    <div class="col align-self-end" v-if="sent">
+      <div class="alert alert-secondary shadow-lg p-3 mb-5 rounded my-2 my-float" role="alert">
         <h4 class="alert-heading">Listo!</h4>
         <label>Hemos enviado un link a su correo para restablecer su contraseña.</label>
       </div>
-      <div class="alert alert-danger shadow-lg p-3 mb-5 rounded" role="alert" v-if="error">
+    </div>
+    <div class="col align-self-end" v-if="error">
+      <div class="alert alert-danger shadow-lg p-3 mb-5 rounded my-float" role="alert">
         <h4 class="alert-heading">Ups!</h4>
         <label>{{ this.errormsg }}</label>
       </div>
@@ -55,7 +61,7 @@ export default {
       setTimeout(() => {
         if (val) this.sent = false;
         this.$router.push({name: 'login'})
-      }, 5000);
+      }, 4000);
     },
   },
   methods: {
@@ -75,5 +81,11 @@ export default {
 <style scoped>
 .back {
   color: #879f2d;
+}
+
+.my-float {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
 }
 </style>

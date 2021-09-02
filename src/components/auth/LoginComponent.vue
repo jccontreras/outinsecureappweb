@@ -1,51 +1,65 @@
 <template>
-  <div class="card my-5 shadow-lg p-3 mb-5 bg-white rounded" style="width: 50%; align-content: center">
-    <div class="card-body">
-      <h5 class="card-title">Bienvenido a OIS Services</h5>
-      <h6 class="card-subtitle mb-2 text-muted">Recuerde que <i class="req">*</i> son campos obligatorios</h6>
+  <div>
+    <div class="card my-5 shadow-lg mb-5 bg-white rounded" style="align-content: center">
       <div class="card-body">
-        <form @submit.prevent="login">
-          <div class="form-group">
-            <label for="email">E-mail</label> <i class="req">*</i>
-            <div class="input-group">
-              <div class="input-group-prepend">
+        <h5 class="card-title">Bienvenido a OIS Services</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Recuerde que <i class="req">*</i> son campos obligatorios</h6>
+        <div class="card-body">
+          <form @submit.prevent="login">
+            <div class="row">
+              <div class="col-sm">
+                <div class="form-group">
+                  <label for="email">E-mail</label> <i class="req">*</i>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
                     <span class="input-group-text">
                       <font-awesome-icon icon="user"/>
                     </span>
+                    </div>
+                    <input type="email" class="form-control" id="email"
+                           placeholder="name@correo.com" autocomplete="off" v-model="loguser.email" required>
+                  </div>
+                </div>
               </div>
-              <input type="email" class="form-control" id="email"
-                     placeholder="name@correo.com" autocomplete="off" v-model="loguser.email" required>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="pass">Contraseña</label> <i class="req">*</i>
-            <div class="input-group">
-              <div class="input-group-prepend">
+            <div class="row">
+              <div class="col-sm">
+                <div class="form-group">
+                  <label for="pass">Contraseña</label> <i class="req">*</i>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
                     <span class="input-group-text">
                       <font-awesome-icon icon="key"/>
                     </span>
-              </div>
-              <input :type="typebutton" class="form-control" id="pass"
-                     autocomplete="off" v-model="loguser.pass" required>
-              <div class="input-group-prepend">
-                    <button class="btn btn-outline-dark" type="button" @click="seePass">
-                      <font-awesome-icon :icon="iconbutton"/>
-                    </button>
+                    </div>
+                    <input :type="typebutton" class="form-control" id="pass"
+                           autocomplete="off" v-model="loguser.pass" required>
+                    <div class="input-group-prepend">
+                      <button class="btn btn-outline-dark" type="button" @click="seePass" :title="titlebutton">
+                        <font-awesome-icon :icon="iconbutton"/>
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <router-link :to="{name: 'resetpsw'}" style="color: #879f2d">Olvide mi contraseña</router-link>
-          <hr>
-          <button class="btn btn-outline-success" type="submit">Iniciar Sesión</button>
-        </form>
-        <div class="alert alert-danger shadow-lg p-3 mb-5 rounded" role="alert" v-if="error">
-          <h4 class="alert-heading">Ups!</h4>
-          <label>{{ this.erroralert }}</label>
+            <router-link :to="{name: 'resetpsw'}" style="color: #879f2d">Olvide mi contraseña</router-link>
+            <hr>
+            <button class="btn btn-outline-success" type="submit">Iniciar Sesión</button>
+          </form>
         </div>
-        <div class="alert alert-warning shadow-lg p-3 mb-5 rounded" role="alert" v-if="alertv">
-          <h4 class="alert-heading">Ups!</h4>
-          <label>Debe verificar su correo electrónico antes de poder ingresar al sistema.</label>
-        </div>
+      </div>
+    </div>
+    <div class="col align-self-end" v-if="error">
+      <div class="alert alert-danger shadow-lg p-3 mb-5 rounded my-float" role="alert">
+        <h4 class="alert-heading">Ups!</h4>
+        <label>{{ this.erroralert }}</label>
+      </div>
+    </div>
+    <div class="col align-self-end" v-if="alertv">
+      <div class="alert alert-warning shadow-lg p-3 mb-5 rounded my-float" role="alert">
+        <h4 class="alert-heading">Ups!</h4>
+        <label>Debes verificar tu correo electrónico antes de poder ingresar al sistema.</label>
       </div>
     </div>
   </div>
@@ -63,6 +77,7 @@ export default {
       alertv: false,
       typebutton: "password",
       iconbutton: "eye",
+      titlebutton: "Ver Contraseña",
       statebutton: false,
       loguser: {
         email: "",
@@ -74,7 +89,7 @@ export default {
     alertv(val) {
       setTimeout(() => {
         if (val) this.alertv = false;
-      }, 5000);
+      }, 4000);
     },
     error(val) {
       setTimeout(() => {
@@ -87,10 +102,12 @@ export default {
       if (this.statebutton) {
         this.iconbutton = "eye";
         this.typebutton = "password";
+        this.titlebutton = "Ver Contraseña";
         this.statebutton = false;
       } else {
         this.iconbutton = "eye-slash";
         this.typebutton = "text";
+        this.titlebutton = "Ocultar Contraseña";
         this.statebutton = true;
       }
     },
@@ -111,8 +128,12 @@ export default {
 
           })
           .catch(error => {
-            console.log("Failed!", error);
-            this.erroralert = error.message;
+            console.log("Failed!", error.code);
+            if (error.code === "auth/wrong-password") {
+              this.erroralert = "La contraseña es incorrecta, por favor intentalo de nuevo.";
+            } else if (error.code === "auth/user-not-found") {
+              this.erroralert = "El usuario no existe, por favor registrate primero.";
+            }
             this.error = true;
           });
     }
@@ -123,5 +144,11 @@ export default {
 <style scoped>
 .req {
   color: red;
+}
+
+.my-float {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
 }
 </style>

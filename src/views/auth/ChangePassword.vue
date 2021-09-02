@@ -1,5 +1,5 @@
 <template>
-  <div class="offset-3">
+  <div class="row justify-content-lg-center">
     <change-password-component/>
   </div>
 </template>
