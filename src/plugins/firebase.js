@@ -7,7 +7,7 @@ import "firebase/app"
 
 // Firebase app config
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+export const firebaseConfig = {
     apiKey: "AIzaSyDdAb23VFC5aTgyg4WrcC7oBEToCew_eN8",
     authDomain: "outinaw-8f3ae.firebaseapp.com",
     databaseURL: "https://outinaw-8f3ae-default-rtdb.firebaseio.com",

@@ -14,10 +14,11 @@ import { faHome,
     faListAlt,
     faKey,
     faEye,
-    faEyeSlash} from '@fortawesome/free-solid-svg-icons';
+    faEyeSlash,
+    faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 library.add(faHome, faArrowCircleLeft, faInfoCircle, faEnvelope, faPhoneSquare, faMapMarkerAlt, faAddressCard,
-            faUser, faLock, faUnlock, faEllipsisH, faListAlt, faKey, faEye, faEyeSlash);
+            faUser, faLock, faUnlock, faEllipsisH, faListAlt, faKey, faEye, faEyeSlash, faUserPlus);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);

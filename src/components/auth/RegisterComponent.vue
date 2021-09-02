@@ -137,8 +137,30 @@
                 </div>
               </div>
             </div>
+            <div class="row justify-content-lg-center" v-if="adminuser">
+              <div class="col-sm">
+                <div class="form-group">
+                  <label>Tipo de Usuario</label> <i class="req">*</i>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <font-awesome-icon icon="list-alt"/>
+                    </span>
+                    </div>
+                    <select class="custom-select" v-model="newuser.rol" required>
+                      <option v-for="user in usertypes" v-bind:key="user.type" :value="user.type">
+                        {{ user.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
             <hr>
-            <button class="btn btn-outline-success" type="submit">Registrarme</button>
+            <button class="btn btn-outline-success" type="submit">
+              <font-awesome-icon v-if="adminuser" icon="user-plus"/>
+              {{buttonlb}}
+            </button>
           </form>
         </div>
       </div>
@@ -163,6 +185,7 @@
 <script>
 import firebase from "firebase/compat";
 import doclist from "@/store/parameters/documentstypes.json";
+import userlist from "@/store/parameters/userstypes.json";
 
 export default {
   name: "RegisterComponent",
@@ -172,6 +195,8 @@ export default {
         title: "",
         message: "",
       },
+      buttonlb: "Registrarme",
+      adminuser: false,
       success: false,
       error: false,
       pass: "",
@@ -183,12 +208,16 @@ export default {
         doc: "",
         cel: "",
         address: "",
+        rol: 3
       },
     };
   },
   computed: {
     doctypes() {
       return doclist.map((doc) => doc);
+    },
+    usertypes() {
+      return userlist.map((user) => user);
     }
   },
   watch: {
@@ -196,6 +225,7 @@ export default {
       setTimeout(() => {
         if (val) this.success = false;
         this.$router.push({name: 'dashboard'});
+        location.reload();
       }, 4000);
     },
     error(val) {
@@ -204,6 +234,12 @@ export default {
       }, 3000);
     },
   },
+  created() {
+    if (this.$store.state.userdata.rol === 1) {
+      this.adminuser = true;
+      this.buttonlb = "Agregar Usuario";
+    }
+  },
   mounted() {
     // eslint-disable-next-line no-undef
     $('#infoConPop').popover({
@@ -211,14 +247,14 @@ export default {
       delay: {"show": 200, "hide": 200},
       title: 'Parámetros Contraseña',
       content: 'Debe tener mínimo 6 caracteres.'
-    })
+    });
     // eslint-disable-next-line no-undef
     $('#infoDirPop').popover({
       container: 'body',
       delay: {"show": 200, "hide": 200},
       title: 'Parámetros Dirección',
       content: 'Por favor ingrese su dirección completa, incluyendo apartamento y/o torre.'
-    })
+    });
   },
   methods: {
     checkPass() {

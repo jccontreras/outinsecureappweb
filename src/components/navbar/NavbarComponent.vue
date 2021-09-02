@@ -7,13 +7,19 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <router-link class="nav-link" :to="{name: 'home'}">Home <span class="sr-only">(current)</span></router-link>
+        <li class="nav-item mx-2" v-if="!user">
+          <router-link class="nav-link" :to="{name: 'home'}">Home</router-link>
+        </li>
+        <li class="nav-item mx-2" v-if="user && adminuser">
+          <router-link :class="classm" :to="{name: 'adduser'}">
+            <font-awesome-icon icon="user-plus"/>
+            Agregar Usuario
+          </router-link>
         </li>
       </ul>
       <div class="form-inline my-2 my-lg-0">
         <template v-if="user">
-          <div class="btn-group dropleft">
+          <div class="btn-group">
             <a class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">
               {{user.displayName}}
@@ -40,31 +46,51 @@
 
 <script>
 import firebase from "firebase/compat";
+
 export default {
   name: 'NavbarComponent',
   data() {
     return {
       user: null,
+      adminuser: false,
+      verifyuser: false,
+      classm: 'nav-link disabled',
     };
   },
   methods: {
+    changeAdmin() {
+      if (this.$store.state.userdata.rol === 1) {
+        this.adminuser = true;
+      }
+    },
     logout() {
       firebase.auth().signOut()
       .then(() => {
         this.$router.push({
           name: 'home'
         })
+        location.reload();
       });
     },
   },
-  created() {
+  beforeCreate() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.user = user;
+        if (user.emailVerified) {
+          this.classm = "nav-link";
+        }
+        firebase.firestore().collection('users').where('uid', '==', user.uid).get()
+            .then((data) => {
+              data.docs.forEach((d) => {
+                this.$store.state.userdata = d.data();
+                this.changeAdmin();
+              })
+            });
       } else {
         this.user = null;
       }
-    })
+    });
   }
 };
 </script>
