@@ -56,7 +56,7 @@
         </div>
       </div>
       <hr>
-      <a class="btn btn-outline-secondary" href="#">cambiar mi contraseña</a>
+      <router-link class="btn btn-outline-secondary" :to="{name: 'managepsw'}">cambiar mi contraseña</router-link>
       <a class="btn btn-outline-info mx-4" href="#">actualizar mis datos</a>
     </div>
   </div>
