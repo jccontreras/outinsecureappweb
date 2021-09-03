@@ -15,10 +15,19 @@ import { faHome,
     faKey,
     faEye,
     faEyeSlash,
-    faUserPlus} from '@fortawesome/free-solid-svg-icons';
+    faUserPlus,
+    faChartArea,
+    faSignOutAlt,
+    faClipboardList,
+    faUsers,
+    faUsersCog,
+    faUserTie,
+    faUserEdit,
+    faUserMinus} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 library.add(faHome, faArrowCircleLeft, faInfoCircle, faEnvelope, faPhoneSquare, faMapMarkerAlt, faAddressCard,
-            faUser, faLock, faUnlock, faEllipsisH, faListAlt, faKey, faEye, faEyeSlash, faUserPlus);
+            faUser, faLock, faUnlock, faEllipsisH, faListAlt, faKey, faEye, faEyeSlash, faUserPlus, faChartArea,
+            faSignOutAlt, faClipboardList, faUsers, faUsersCog, faUserTie, faUserEdit, faUserMinus);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);

@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #cddb93">
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #b5cc62">
     <img src="@/assets/oislogo.png" style="max-height: 4%; max-width: 4%">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,9 +11,15 @@
           <router-link class="nav-link" :to="{name: 'home'}">Home</router-link>
         </li>
         <li class="nav-item mx-2" v-if="user && adminuser">
-          <router-link :class="classm" :to="{name: 'adduser'}">
-            <font-awesome-icon icon="user-plus"/>
-            Agregar Usuario
+          <router-link :class="classm" :to="{name: 'users'}">
+            <font-awesome-icon icon="users"/>
+            Usuarios
+          </router-link>
+        </li>
+        <li class="nav-item mx-2" v-if="user">
+          <router-link :class="classm" :to="{name: 'services'}">
+            <font-awesome-icon icon="clipboard-list"/>
+            Servicios
           </router-link>
         </li>
       </ul>
@@ -25,9 +31,19 @@
               {{user.displayName}}
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <router-link class="dropdown-item" :to="{name: 'dashboard'}">Dashboard</router-link>
+              <router-link class="dropdown-item" :to="{name: 'dashboard'}">
+                <font-awesome-icon icon="chart-area"/>
+                Dashboard
+              </router-link>
+              <router-link class="dropdown-item" :to="{name: 'profile'}">
+                <font-awesome-icon icon="user"/>
+                Mi Perfil
+              </router-link>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item text-muted" @click="logout" style="cursor: pointer; font-style: italic;">Cerrar Sesión</a>
+              <a class="dropdown-item text-muted" @click="logout" style="cursor: pointer; font-style: italic;">
+                <font-awesome-icon icon="sign-out-alt"/>
+                Cerrar Sesión
+              </a>
             </div>
           </div>
         </template>
@@ -59,7 +75,7 @@ export default {
   },
   methods: {
     changeAdmin() {
-      if (this.$store.state.userdata.rol === 1) {
+      if (this.$store.state.userdata.data.rol === 1) {
         this.adminuser = true;
       }
     },
@@ -83,7 +99,7 @@ export default {
         firebase.firestore().collection('users').where('uid', '==', user.uid).get()
             .then((data) => {
               data.docs.forEach((d) => {
-                this.$store.state.userdata = d.data();
+                this.$store.state.userdata.data = d.data();
                 this.changeAdmin();
               })
             });

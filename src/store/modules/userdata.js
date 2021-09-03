@@ -1,14 +1,20 @@
+const data = null;
+const listselect = null;
+
 const state = {
-    userdata: null,
 };
 
 const actions = {};
 
-const mutations = {};
+const mutations = {
+};
 
-const getters = {};
+const getters = {
+};
 
 export default {
+    data,
+    listselect,
     state,
     actions,
     mutations,

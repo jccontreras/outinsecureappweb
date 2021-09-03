@@ -2,7 +2,12 @@
   <div>
     <div class="card my-5 shadow-lg p-3 mb-5 bg-white rounded" style="align-content: center">
       <div class="card-body">
-        <h5 class="card-title">Registro de Usuario</h5>
+        <h5 class="card-title">
+          <router-link class="back" :to="{name: 'users'}" title="Regresar" v-if="adminuser">
+            <font-awesome-icon icon="arrow-circle-left"/>
+          </router-link>
+          {{titlelb}}
+        </h5>
         <h6 class="card-subtitle mb-2 text-muted">Recuerde que <i class="req">*</i> son campos obligatorios</h6>
         <div class="card-body">
           <form @submit.prevent="checkPass">
@@ -195,6 +200,7 @@ export default {
         title: "",
         message: "",
       },
+      titlelb: "Registro de Usuario",
       buttonlb: "Registrarme",
       adminuser: false,
       success: false,
@@ -236,9 +242,10 @@ export default {
     },
   },
   created() {
-    if (this.$store.state.userdata.rol === 1) {
+    if (this.$store.state.userdata.data.rol === 1) {
       this.adminuser = true;
       this.buttonlb = "Agregar Usuario";
+      this.titlelb = "Agregar un Usuario"
     }
   },
   mounted() {
@@ -319,6 +326,10 @@ export default {
 </script>
 
 <style>
+.back {
+  color: #879f2d;
+}
+
 .req {
   color: red;
 }
