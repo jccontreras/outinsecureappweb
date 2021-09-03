@@ -117,7 +117,6 @@ export default {
           .signInWithEmailAndPassword(this.loguser.email, this.loguser.pass)
           .then((user) => {
             if (user.user.emailVerified) {
-              console.log("Success! ", user);
               this.loguser.name = "";
               this.loguser.email = "";
               this.$router.push({name: 'dashboard'});
@@ -128,11 +127,12 @@ export default {
 
           })
           .catch(error => {
-            console.log("Failed!", error.code);
             if (error.code === "auth/wrong-password") {
               this.erroralert = "La contraseña es incorrecta, por favor intentalo de nuevo.";
             } else if (error.code === "auth/user-not-found") {
               this.erroralert = "El usuario no existe, por favor registrate primero.";
+            } else if (error.code === "auth/user-disabled") {
+              this.erroralert = "El usuario está deshabilitado, por favor contacte al soporte técnico.";
             }
             this.error = true;
           });

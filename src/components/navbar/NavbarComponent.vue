@@ -23,7 +23,7 @@
           </router-link>
         </li>
       </ul>
-      <div class="form-inline my-2 my-lg-0">
+      <div class="form-inline my-2 my-lg-0 mx-4">
         <template v-if="user">
           <div class="btn-group">
             <a class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
@@ -110,7 +110,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-
-</style>
