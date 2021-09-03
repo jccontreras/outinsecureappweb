@@ -13,13 +13,13 @@
             <div class="col-sm">
               <label>
                 <strong>Nombre:</strong>
-                {{$store.state.userdata.data.name}}
+                {{ $store.state.userdata.data.name }}
               </label>
             </div>
             <div class="col-sm">
               <label>
                 <strong>Documento:</strong>
-                {{$store.state.userdata.data.tdoc}} {{$store.state.userdata.data.doc}}
+                {{ $store.state.userdata.data.tdoc }} {{ $store.state.userdata.data.doc }}
               </label>
             </div>
           </div>
@@ -27,13 +27,13 @@
             <div class="col-sm">
               <label>
                 <strong>Email:</strong>
-                {{$store.state.userdata.data.email}}
+                {{ $store.state.userdata.data.email }}
               </label>
             </div>
             <div class="col-sm">
               <label>
                 <strong>Celular:</strong>
-                {{$store.state.userdata.data.cel}}
+                {{ $store.state.userdata.data.cel }}
               </label>
             </div>
           </div>
@@ -41,7 +41,7 @@
             <div class="col-sm">
               <label>
                 <strong>Dirección: </strong>
-                {{$store.state.userdata.data.address}}
+                {{ $store.state.userdata.data.address }}
               </label>
             </div>
             <div class="col-sm">
@@ -53,6 +53,12 @@
               </label>
             </div>
           </div>
+          <div class="row justify-content-lg-center">
+            <label>
+              <strong>App Versión: </strong> <label>
+              {{ version }}</label>
+            </label>
+          </div>
         </div>
       </div>
       <hr>
@@ -63,8 +69,18 @@
 </template>
 
 <script>
+import constants from "@/store/constants";
+
 export default {
   name: "ProfileComponent",
+  data() {
+    return {
+      version: "",
+    };
+  },
+  mounted() {
+    this.version = constants.appversion;
+  }
 }
 </script>
 
