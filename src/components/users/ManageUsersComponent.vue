@@ -3,12 +3,27 @@
     <div class="table-responsive shadow-lg p-3 mb-5 bg-white rounded">
       <div class="card" style="align-content: center">
         <div class="card-body">
-          <h5 class="card-title">
-            <router-link class="back" :to="{name: 'users'}" title="Regresar">
-              <font-awesome-icon icon="arrow-circle-left"/>
-            </router-link>
-            {{ titlelb }}
-          </h5>
+          <div class="row">
+            <div class="col-md">
+              <h5 class="card-title">
+                <router-link class="back" :to="{name: 'users'}" title="Regresar">
+                  <font-awesome-icon icon="arrow-circle-left"/>
+                </router-link>
+                {{ titlelb }}
+              </h5>
+            </div>
+            <div class="col-sm justify-content-lg-right">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control"
+                       placeholder="Digita el correo electrónico del usuario"
+                       aria-label="Recipient's username" aria-describedby="basic-addon2" id="search"
+                       v-model="search">
+                <div class="input-group-append">
+                  <span class="input-group-text search"><font-awesome-icon icon="search"/></span>
+                </div>
+              </div>
+            </div>
+          </div>
           <table class="table table-hover table-sm table-striped">
             <thead class="back">
             <tr>
@@ -23,7 +38,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="u in userslist" v-bind:key="u.doc">
+            <tr v-for="u in getlist" v-bind:key="u.doc">
               <td>{{ u.tdoc }}</td>
               <td>{{ u.doc }}</td>
               <td>{{ u.name }}</td>
@@ -83,10 +98,17 @@ export default {
       success: false,
       error: false,
       userdata: {},
+      search: "",
     };
   },
   created() {
     this.loadData();
+  },
+  computed: {
+    getlist() {
+      // return datos.map((item) => item);
+      return this.userslist.filter((item) => item.email.toLowerCase().includes(this.search.toLowerCase()));
+    },
   },
   watch: {
     success(val) {
@@ -136,13 +158,13 @@ export default {
       console.log(user.uid);
       console.log(user.email);
       admin.auth().getUser(user.uid)
-      .then((user) => {
-        console.log("Se elimino el usuario");
-        console.log(user);
-      })
-      .catch((error) => {
-        console.log(error.code);
-      });
+          .then((user) => {
+            console.log("Se elimino el usuario");
+            console.log(user);
+          })
+          .catch((error) => {
+            console.log(error.code);
+          });
       /*const user = firebase.auth().currentUser;
       user.delete()
           .then(() => {
@@ -176,5 +198,10 @@ export default {
   position: fixed;
   bottom: 40px;
   right: 40px;
+}
+
+.search {
+  background-color: #6c757d;
+  color: white;
 }
 </style>

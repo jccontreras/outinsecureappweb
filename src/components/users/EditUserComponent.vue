@@ -208,7 +208,7 @@ export default {
         // eslint-disable-next-line no-undef
         $('#editUserModal')
             .modal('hide');
-      }, 4000);
+      }, 3000);
     },
   },
   methods: {

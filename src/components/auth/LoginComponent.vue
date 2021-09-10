@@ -64,7 +64,7 @@
     </div>
     <div class="col align-self-end" v-if="success">
       <div class="alert alert-success shadow-lg p-3 mb-5 rounded my-float" role="alert">
-        <h4 class="alert-heading">Bievenido {{$store.state.userdata.data.name}}!</h4>
+        <h4 class="alert-heading">Bievenido {{namealr}}!</h4>
         <label>Has ingresado al sistema exitosamente.</label>
       </div>
     </div>
@@ -80,6 +80,7 @@ export default {
     return {
       erroralert: "",
       error: false,
+      namealr: "",
       alertv: false,
       success: false,
       typebutton: "password",
@@ -107,7 +108,7 @@ export default {
       setTimeout(() => {
         if (val) this.success = false;
         this.$router.push({name: 'dashboard'});
-      }, 3000);
+      }, 2000);
     },
   },
   methods: {
@@ -132,6 +133,7 @@ export default {
                 .signInWithEmailAndPassword(this.loguser.email, this.loguser.pass)
                 .then((user) => {
                   if (user.user.emailVerified) {
+                    this.namealr = user.user.displayName;
                     this.loguser.name = "";
                     this.loguser.email = "";
                     this.success = true;

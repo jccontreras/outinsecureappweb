@@ -71,6 +71,7 @@ export default {
   },
   methods: {
     sendChangePsw() {
+      firebase.auth().languageCode = 'ES';
       firebase.auth().sendPasswordResetEmail(this.email)
           .then(() => {
             this.sent = true;
