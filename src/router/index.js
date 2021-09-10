@@ -128,18 +128,13 @@ router.beforeEach((to, from, next) => {
   if(to.matched.some(route => route.meta.requiresAuth)) {
     const user = firebase.auth().currentUser;
     if (user) {
-      console.log("entro if user");
       if (to.matched.some(router => router.meta.requiresAdmin)) {
-        console.log("entro if requiresAdmin");
         if (store.state.userdata.data.rol === 1) {
-          console.log("entro if data.rol");
           next();
         } else {
-          console.log("entro else data.rol");
           next({name: 'dashboard'});
         }
         } else {
-          console.log("entro else");
           next();
         }
     } else {

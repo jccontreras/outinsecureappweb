@@ -45,7 +45,10 @@
             </div>
             <router-link :to="{name: 'resetpsw'}" style="color: #879f2d">Olvide mi contraseña</router-link>
             <hr>
-            <button class="btn btn-outline-success" type="submit">Iniciar Sesión</button>
+            <button class="btn btn-outline-success" type="submit">
+              Iniciar Sesión
+              <font-awesome-icon icon="sign-in-alt"/>
+            </button>
           </form>
         </div>
       </div>
@@ -64,7 +67,7 @@
     </div>
     <div class="col align-self-end" v-if="success">
       <div class="alert alert-success shadow-lg p-3 mb-5 rounded my-float" role="alert">
-        <h4 class="alert-heading">Bievenido {{namealr}}!</h4>
+        <h4 class="alert-heading">Bievenido {{ namealr }}!</h4>
         <label>Has ingresado al sistema exitosamente.</label>
       </div>
     </div>

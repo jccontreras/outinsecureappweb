@@ -106,7 +106,6 @@ export default {
   },
   computed: {
     getlist() {
-      // return datos.map((item) => item);
       return this.userslist.filter((item) => item.email.toLowerCase().includes(this.search.toLowerCase()));
     },
   },

@@ -1,5 +1,5 @@
-const data = null;
-const listselect = null;
+const data = {};
+const listselect = {};
 
 const state = {
 };

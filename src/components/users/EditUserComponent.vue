@@ -15,7 +15,7 @@
         <div class="modal-body">
           <h6 class="card-subtitle mb-2 text-muted">
             Recuerde que <i class="req">*</i> son campos obligatorios
-            <a id="infoGenPop" tabindex="0" class="btn btn-sm btn-link "
+            <a v-if="!admin" id="infoGenPop" tabindex="0" class="btn btn-sm btn-link "
                role="button" data-toggle="popover" data-trigger="focus">
               <font-awesome-icon icon="info-circle"/>
             </a>
@@ -24,14 +24,15 @@
             <div class="row">
               <div class="col-md text-left">
                 <div class="form-group">
-                  <label>Tipo de Documento</label>
+                  <label>Tipo de Documento</label> <i v-if="admin" class="req">*</i>
                   <div class="input-group">
                     <div class="input-group-prepend">
                     <span class="input-group-text">
                       <font-awesome-icon icon="list-alt"/>
                     </span>
                     </div>
-                    <select id="tdoc" class="custom-select" v-model="userdata.tdoc" :disabled="!admin">
+                    <select id="tdoc" class="custom-select" v-model="userdata.tdoc"
+                            :disabled="!admin" :required="admin">
                       <option v-for="doc in doctypes" v-bind:key="doc.id" :value="doc.id">
                         {{ doc.name }}
                       </option>
@@ -41,7 +42,7 @@
               </div>
               <div class="col-md text-left">
                 <div class="form-group">
-                  <label for="doc">Documento de Identidad</label>
+                  <label for="doc">Documento de Identidad</label> <i v-if="admin" class="req">*</i>
                   <div class="input-group">
                     <div class="input-group-prepend">
                     <span class="input-group-text">
@@ -49,7 +50,7 @@
                     </span>
                     </div>
                     <input type="text" class="form-control" id="doc"
-                           autocomplete="off" v-model="userdata.doc" :disabled="!admin">
+                           autocomplete="off" v-model="userdata.doc" :disabled="!admin" :required="admin">
                   </div>
                 </div>
               </div>
@@ -122,14 +123,14 @@
               <div class="col-md"/>
               <div class="col-md text-left">
                 <div class="form-group">
-                  <label>Tipo de Usuario</label>
+                  <label>Tipo de Usuario</label> <i v-if="admin" class="req">*</i>
                   <div class="input-group">
                     <div class="input-group-prepend">
                     <span class="input-group-text">
                       <font-awesome-icon icon="list-alt"/>
                     </span>
                     </div>
-                    <select class="custom-select" v-model="userdata.rol" :disabled="!admin">
+                    <select class="custom-select" v-model="userdata.rol" :disabled="!admin" :required="admin">
                       <option v-for="user in usertypes" v-bind:key="user.type" :value="user.type">
                         {{ user.name }}
                       </option>
