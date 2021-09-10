@@ -62,6 +62,12 @@
         <label>Debes verificar tu correo electrónico antes de poder ingresar al sistema.</label>
       </div>
     </div>
+    <div class="col align-self-end" v-if="success">
+      <div class="alert alert-success shadow-lg p-3 mb-5 rounded my-float" role="alert">
+        <h4 class="alert-heading">Bievenido {{$store.state.userdata.data.name}}!</h4>
+        <label>Has ingresado al sistema exitosamente.</label>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -75,6 +81,7 @@ export default {
       erroralert: "",
       error: false,
       alertv: false,
+      success: false,
       typebutton: "password",
       iconbutton: "eye",
       titlebutton: "Ver Contraseña",
@@ -96,6 +103,12 @@ export default {
         if (val) this.error = false;
       }, 3000);
     },
+    success(val) {
+      setTimeout(() => {
+        if (val) this.success = false;
+        this.$router.push({name: 'dashboard'});
+      }, 3000);
+    },
   },
   methods: {
     seePass() {
@@ -112,29 +125,32 @@ export default {
       }
     },
     login() {
-      firebase
-          .auth()
-          .signInWithEmailAndPassword(this.loguser.email, this.loguser.pass)
-          .then((user) => {
-            if (user.user.emailVerified) {
-              this.loguser.name = "";
-              this.loguser.email = "";
-              this.$router.push({name: 'dashboard'});
-            } else {
-              firebase.auth().signOut();
-              this.alertv = true;
-            }
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+          .then(() => {
+            firebase
+                .auth()
+                .signInWithEmailAndPassword(this.loguser.email, this.loguser.pass)
+                .then((user) => {
+                  if (user.user.emailVerified) {
+                    this.loguser.name = "";
+                    this.loguser.email = "";
+                    this.success = true;
+                  } else {
+                    firebase.auth().signOut();
+                    this.alertv = true;
+                  }
 
-          })
-          .catch(error => {
-            if (error.code === "auth/wrong-password") {
-              this.erroralert = "La contraseña es incorrecta, por favor intentalo de nuevo.";
-            } else if (error.code === "auth/user-not-found") {
-              this.erroralert = "El usuario no existe, por favor registrate primero.";
-            } else if (error.code === "auth/user-disabled") {
-              this.erroralert = "El usuario está deshabilitado, por favor contacte al soporte técnico.";
-            }
-            this.error = true;
+                })
+                .catch(error => {
+                  if (error.code === "auth/wrong-password") {
+                    this.erroralert = "La contraseña es incorrecta, por favor intentalo de nuevo.";
+                  } else if (error.code === "auth/user-not-found") {
+                    this.erroralert = "El usuario no existe, por favor registrate primero.";
+                  } else if (error.code === "auth/user-disabled") {
+                    this.erroralert = "El usuario está deshabilitado, por favor contacte al soporte técnico.";
+                  }
+                  this.error = true;
+                });
           });
     }
   }

@@ -28,7 +28,7 @@
           <div class="btn-group">
             <a class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">
-              {{user.displayName}}
+              {{$store.state.userdata.data.name}}
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <router-link class="dropdown-item" :to="{name: 'dashboard'}">
@@ -92,10 +92,6 @@ export default {
   beforeCreate() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.user = user;
-        if (user.emailVerified) {
-          this.classm = "nav-link";
-        }
         firebase.firestore().collection('users').where('uid', '==', user.uid).get()
             .then((data) => {
               data.docs.forEach((d) => {
@@ -103,6 +99,10 @@ export default {
                 this.changeAdmin();
               })
             });
+        this.user = user;
+        if (user.emailVerified) {
+          this.classm = "nav-link";
+        }
       } else {
         this.user = null;
       }

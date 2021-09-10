@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-4">
+      <div class="col-md">
         <div class="card shadow-lg p-3 mb-5 bg-white rounded text-center">
           <div class="card-header">
             <h5 class="card-title" style="color: #879f2d;">
@@ -20,7 +20,7 @@
           </div>
         </div>
       </div>
-      <div class="col-4">
+      <div class="col-md">
         <div class="card shadow-lg p-3 mb-5 bg-white rounded text-center">
           <div class="card-header">
             <h5 class="card-title" style="color: #879f2d;">
@@ -39,7 +39,7 @@
           </div>
         </div>
       </div>
-      <div class="col-4">
+      <div class="col-md">
         <div class="card shadow-lg p-3 mb-5 bg-white rounded text-center">
           <div class="card-header">
             <h5 class="card-title" style="color: #879f2d;">

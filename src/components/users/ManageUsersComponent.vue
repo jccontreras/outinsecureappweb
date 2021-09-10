@@ -34,7 +34,7 @@
               <td v-if="u.rol == 2">Técnico</td>
               <td v-if="u.rol == 3">Cliente</td>
               <td v-if="u.uid != $store.state.userdata.data.uid" class="text-center">
-                <a title="Editar Usuario" class="edit">
+                <a title="Editar Usuario" class="edit" @click="openEdit(u)">
                   <font-awesome-icon icon="user-edit"/>
                 </a>
                 <a class="delete mx-4" title="Eliminar Usuario" @click="delUser(u)">
@@ -61,44 +61,32 @@
         <label>Algo ha salido mal, por favor intentalo nuevamente.</label>
       </div>
     </div>
+    <edit-user-component :admin="true" :userdata="userdata" @updatedinfo="loadData" @reloadinfo="loadData"/>
   </div>
 </template>
 
 <script>
 import firebase from "firebase/compat";
-import * as admin from 'firebase-admin';
+import admin from "firebase-admin";
+import EditUserComponent from "./EditUserComponent.vue";
+// const admin = require("firebase-admin");
 
 export default {
   name: "ManageUsersComponent",
+  components: {
+    EditUserComponent,
+  },
   data() {
     return {
       userslist: [],
       titlelb: "",
       success: false,
       error: false,
+      userdata: {},
     };
   },
   created() {
-    const query = firebase.firestore().collection('users');
-    if (this.$store.state.userdata.listselect) {
-      this.titlelb = "Usuarios del Sistema";
-      query.where('rol', '!=', 3)
-          .get()
-          .then((data) => {
-            data.docs.forEach((d) => {
-              this.userslist.push(d.data());
-            })
-          });
-    } else {
-      this.titlelb = "Clientes del Sistema";
-      query.where('rol', '==', 3)
-          .get()
-          .then((data) => {
-            data.docs.forEach((d) => {
-              this.userslist.push(d.data());
-            })
-          });
-    }
+    this.loadData();
   },
   watch: {
     success(val) {
@@ -115,15 +103,46 @@ export default {
     },
   },
   methods: {
+    loadData() {
+      this.userslist = [];
+      const query = firebase.firestore().collection('users');
+      if (this.$store.state.userdata.listselect) {
+        this.titlelb = "Usuarios del Sistema";
+        query.where('rol', '!=', 3)
+            .get()
+            .then((data) => {
+              data.docs.forEach((d) => {
+                this.userslist.push(d.data());
+              });
+            });
+      } else {
+        this.titlelb = "Clientes del Sistema";
+        query.where('rol', '==', 3)
+            .get()
+            .then((data) => {
+              data.docs.forEach((d) => {
+                this.userslist.push(d.data());
+              })
+            });
+      }
+    },
+    openEdit(user) {
+      this.userdata = user;
+      // eslint-disable-next-line no-undef
+      $('#editUserModal')
+          .modal('show');
+    },
     delUser(user) {
-      console.log(user);
-      admin.auth().deleteUser(user.uid)
-      .then((resultuser) => {
-        console.log(resultuser);
+      console.log(user.uid);
+      console.log(user.email);
+      admin.auth().getUser(user.uid)
+      .then((user) => {
+        console.log("Se elimino el usuario");
+        console.log(user);
       })
       .catch((error) => {
         console.log(error.code);
-      })
+      });
       /*const user = firebase.auth().currentUser;
       user.delete()
           .then(() => {

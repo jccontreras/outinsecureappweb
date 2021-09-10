@@ -6,7 +6,7 @@
           <router-link class="back" :to="{name: 'users'}" title="Regresar" v-if="adminuser">
             <font-awesome-icon icon="arrow-circle-left"/>
           </router-link>
-          {{titlelb}}
+          {{ titlelb }}
         </h5>
         <h6 class="card-subtitle mb-2 text-muted">Recuerde que <i class="req">*</i> son campos obligatorios</h6>
         <div class="card-body">
@@ -92,8 +92,9 @@
               <div class="col-sm">
                 <div class="form-group">
                   <label for="dir">Dirección</label> <i class="req">*</i>
-                  <a id="infoDirPop" tabindex="0" class="btn btn-sm btn-link "
-                     role="button" data-toggle="popover" data-trigger="focus">
+                  <a id="infoDirPop" tabindex="0" class="btn btn-sm btn-link infocol"
+                     role="button" data-toggle="popover" data-trigger="focus"
+                     style="color: #6c757d">
                     <font-awesome-icon icon="info-circle"/>
                   </a>
                   <div class="input-group">
@@ -112,8 +113,9 @@
               <div class="col-sm">
                 <div class="form-group">
                   <label for="pass">Contraseña</label> <i class="req">*</i>
-                  <a id="infoConPop" tabindex="0" class="btn btn-sm btn-link "
-                     role="button" data-toggle="popover" data-trigger="focus">
+                  <a id="infoConPop" tabindex="0" class="btn btn-sm btn-link infocol"
+                     role="button" data-toggle="popover" data-trigger="focus"
+                     style="color: #6c757d">
                     <font-awesome-icon icon="info-circle"/>
                   </a>
                   <div class="input-group">
@@ -143,7 +145,7 @@
               </div>
             </div>
             <div class="row justify-content-lg-center" v-if="adminuser">
-              <div class="col-sm">
+              <div class="col-md">
                 <div class="form-group">
                   <label>Tipo de Usuario</label> <i class="req">*</i>
                   <div class="input-group">
@@ -153,6 +155,7 @@
                     </span>
                     </div>
                     <select class="custom-select" v-model="newuser.rol" required>
+                      <option selected>Escoge uno</option>
                       <option v-for="user in usertypes" v-bind:key="user.type" :value="user.type">
                         {{ user.name }}
                       </option>
@@ -164,7 +167,7 @@
             <hr>
             <button class="btn btn-outline-success" type="submit">
               <font-awesome-icon v-if="adminuser" icon="user-plus"/>
-              {{buttonlb}}
+              {{ buttonlb }}
             </button>
           </form>
         </div>

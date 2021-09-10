@@ -1,8 +1,10 @@
 <template>
   <div class="row justify-content-lg-center my-5">
-    <div class="col-9">
+    <div class="col-2"/>
+    <div class="col-md">
       <profile-component/>
     </div>
+    <div class="col-2"/>
   </div>
 </template>
 
